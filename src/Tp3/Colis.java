@@ -18,7 +18,7 @@ public class Colis extends ObjectPostale{
 
     @Override
     double prix() {
-        double prixAffranchisement = 0.08*poid+100;
+        double prixAffranchisement = 0.08*poid+555;
         if(expidié_en_recommande) return prixAffranchisement + 3;
         else return prixAffranchisement;
     }
