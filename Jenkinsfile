@@ -39,7 +39,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying...'
+                echo 'Deploying... D'
                 // Ici, ajoutez vos étapes de déploiement
             }
         }
