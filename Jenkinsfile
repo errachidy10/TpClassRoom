@@ -14,7 +14,7 @@ pipeline {
                         sh 'echo "Building on Unix"'
                         // Add your build commands for Unix here
                     } else {
-                        bat 'echo "Building on Windows"'
+                        bat 'echo "Building on Windowss"'
                         // Add your build commands for Windows here
                     }
                 }
