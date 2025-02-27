@@ -15,6 +15,7 @@ public class Main {
         ObjectPostale lettre = test.lire(sc,"lettre");
         System.out.println(lettre);
         System.out.println("le prix est :" +lettre.prix());
+        System.out.println("helo jenkins push");
 
         sc.close();
 
