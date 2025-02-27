@@ -11,6 +11,7 @@ public class Main {
         System.out.println("le prix est :" +colis.prix());
 
         System.out.println("jenkins for testing ") ;
+        System.out.println("jenkins for testing 2 ") ;
         ObjectPostale lettre = test.lire(sc,"lettre");
         System.out.println(lettre);
         System.out.println("le prix est :" +lettre.prix());
