@@ -10,7 +10,7 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <sonar.sources>src</sonar.sources>  <!-- Or src/main/java if that's your root -->
+        <sonar.sources>src/Tp3/Main.java</sonar.sources>  <!-- Or src/main/java if that's your root -->
     </properties>
 
     <dependencies>
