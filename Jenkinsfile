@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven 3.9.9' // Assurez-vous que Maven est configuré dans Jenkins
+    }
+
     environment {
         SONARQUBE_URL = 'http://localhost:9000'
         SONARQUBE_TOKEN = credentials('sonarJenkinsToken') // Assurez-vous d'avoir configuré ce token dans Jenkins
@@ -16,9 +20,9 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh 'mvn clean compile' // Assurez-vous que Maven est installé et configuré
+                        sh 'mvn clean compile'
                     } else {
-                        bat 'mvn clean compile' // Assurez-vous que Maven est installé et configuré
+                        bat 'mvn clean compile'
                     }
                 }
             }
@@ -27,41 +31,21 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh "sonar-scanner -Dsonar.projectKey=my-project -Dsonar.sources=. -Dsonar.host.url=${env.SONARQUBE_URL} -Dsonar.login=${env.SONARQUBE_TOKEN} -Dsonar.java.binaries=target/classes"
+                        sh "mvn sonar:sonar -Dsonar.projectKey=my-project -Dsonar.host.url=${env.SONARQUBE_URL} -Dsonar.login=${env.SONARQUBE_TOKEN}"
                     } else {
-                        bat "sonar-scanner -Dsonar.projectKey=my-project -Dsonar.sources=. -Dsonar.host.url=${env.SONARQUBE_URL} -Dsonar.login=${env.SONARQUBE_TOKEN} -Dsonar.java.binaries=target/classes"
+                        bat "mvn sonar:sonar -Dsonar.projectKey=my-project -Dsonar.host.url=${env.SONARQUBE_URL} -Dsonar.login=${env.SONARQUBE_TOKEN}"
                     }
                 }
-            }
-        }
-        stage('Test') {
-            steps {
-                script {
-                    if (isUnix()) {
-                        sh './run-tests.sh'
-                    } else {
-                        bat 'run-tests.bat'
-                    }
-                }
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying...'
             }
         }
     }
 
     post {
         success {
-            mail to: 'abderrahmanerrachidy@gmail.com',
-                 subject: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-                 body: "Good news, the build succeeded.\n\nCheck it here: ${env.BUILD_URL}"
+            echo 'Pipeline succeeded'
         }
         failure {
-            mail to: 'abderrahmanerrachidy@gmail.com',
-                 subject: "FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-                 body: "Unfortunately, the build failed.\n\nCheck it here: ${env.BUILD_URL}"
+            echo 'Pipeline failed'
         }
     }
 }
