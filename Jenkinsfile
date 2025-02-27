@@ -16,9 +16,9 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh 'echo "Building on Unix"'
+                        sh 'mvn clean compile' // Assurez-vous que Maven est installé et configuré
                     } else {
-                        bat 'echo "Building on Windows"'
+                        bat 'mvn clean compile' // Assurez-vous que Maven est installé et configuré
                     }
                 }
             }
@@ -27,9 +27,9 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh "sonar-scanner -Dsonar.projectKey=my-project -Dsonar.sources=. -Dsonar.host.url=${env.SONARQUBE_URL} -Dsonar.login=${env.SONARQUBE_TOKEN}"
+                        sh "sonar-scanner -Dsonar.projectKey=my-project -Dsonar.sources=. -Dsonar.host.url=${env.SONARQUBE_URL} -Dsonar.login=${env.SONARQUBE_TOKEN} -Dsonar.java.binaries=target/classes"
                     } else {
-                        bat "sonar-scanner -Dsonar.projectKey=my-project -Dsonar.sources=. -Dsonar.host.url=${env.SONARQUBE_URL} -Dsonar.login=${env.SONARQUBE_TOKEN}"
+                        bat "sonar-scanner -Dsonar.projectKey=my-project -Dsonar.sources=. -Dsonar.host.url=${env.SONARQUBE_URL} -Dsonar.login=${env.SONARQUBE_TOKEN} -Dsonar.java.binaries=target/classes"
                     }
                 }
             }
@@ -59,7 +59,7 @@ pipeline {
                  body: "Good news, the build succeeded.\n\nCheck it here: ${env.BUILD_URL}"
         }
         failure {
-            mail to: 'you@example.com',
+            mail to: 'abderrahmanerrachidy@gmail.com',
                  subject: "FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
                  body: "Unfortunately, the build failed.\n\nCheck it here: ${env.BUILD_URL}"
         }
