@@ -10,7 +10,7 @@ public class Main {
         System.out.println(colis);
         System.out.println("le prix est :" +colis.prix());
 
-
+        System.out.println("jenkins for testing ") ;
         ObjectPostale lettre = test.lire(sc,"lettre");
         System.out.println(lettre);
         System.out.println("le prix est :" +lettre.prix());
