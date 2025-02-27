@@ -11,13 +11,11 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh 'mvn clean install' // Si vous utilisez Maven
-                        // ou
-                        // sh './gradlew build'  // Si vous utilisez Gradle
+                        sh 'echo "Building on Unix"'
+                        // Add your build commands for Unix here
                     } else {
-                        bat '"C:\\Program Files\\apache-maven-3.9.9\\bin\\mvn" clean install' // Maven path for Windows
-                        // ou
-                        // bat 'gradlew.bat build'  // Gradle path for Windows
+                        bat 'echo "Building on Windows"'
+                        // Add your build commands for Windows here
                     }
                 }
             }
@@ -26,13 +24,11 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh 'mvn test'  // Si vous utilisez Maven
-                        // ou
-                        // sh './gradlew test'  // Si vous utilisez Gradle
+                        sh 'echo "Testing on Unix"'
+                        // Add your test commands for Unix here
                     } else {
-                        bat '"C:\\Program Files\\apache-maven-3.9.9\\bin\\mvn" test' // Maven path for Windows
-                        // ou
-                        // bat 'gradlew.bat test'  // Gradle path for Windows
+                        bat 'echo "Testing on Windows"'
+                        // Add your test commands for Windows here
                     }
                 }
             }
@@ -40,7 +36,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying...'
-                // Ici, ajoutez vos étapes de déploiement
+                // Add your deployment steps here
             }
         }
     }
