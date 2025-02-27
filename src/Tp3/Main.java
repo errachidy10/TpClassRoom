@@ -16,7 +16,6 @@ public class Main {
         System.out.println(lettre);
         System.out.println("le prix est :" +lettre.prix());
         System.out.println("helo jenkins push");
-
         sc.close();
 
     }
