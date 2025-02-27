@@ -1,31 +1,46 @@
 pipeline {
     agent any
 
-    tools {
-        // Install the Maven version configured as "M3" and add it to the path.
-        maven "M3"
-    }
-
     stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/errachidy10/TpClassRoom.git', branch: 'master' // or your branch
+            }
+        }
         stage('Build') {
             steps {
-                // Get some code from a GitHub repository
-                git 'https://github.com/errachidy10/TpClassRoom.git'
-
-                // Run Maven on a Unix agent.
-                sh "mvn -Dmaven.test.failure.ignore=true clean package"
-
-                // To run Maven on a Windows agent, use
-                // bat "mvn -Dmaven.test.failure.ignore=true clean package"
-            }
-
-            post {
-                // If Maven was able to run the tests, even if some of the test
-                // failed, record the test results and archive the jar file.
-                success {
-                    junit '**/target/surefire-reports/TEST-*.xml'
-                    archiveArtifacts 'target/*.jar'
+                script {
+                    if (isUnix()) {
+                        sh 'mvn clean install' // Si vous utilisez Maven
+                        // ou
+                        // sh './gradlew build'  // Si vous utilisez Gradle
+                    } else {
+                        bat '"C:\\Program Files\\apache-maven-3.9.9\\bin\\mvn" clean install' // Maven path for Windows
+                        // ou
+                        // bat 'gradlew.bat build'  // Gradle path for Windows
+                    }
                 }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh 'mvn test'  // Si vous utilisez Maven
+                        // ou
+                        // sh './gradlew test'  // Si vous utilisez Gradle
+                    } else {
+                        bat '"C:\\Program Files\\apache-maven-3.9.9\\bin\\mvn" test' // Maven path for Windows
+                        // ou
+                        // bat 'gradlew.bat test'  // Gradle path for Windows
+                    }
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+                // Ici, ajoutez vos étapes de déploiement
             }
         }
     }
